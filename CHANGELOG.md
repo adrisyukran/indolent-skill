@@ -10,3 +10,4 @@ All notable changes to this project are documented here. Format follows [Keep a 
 - Carve-outs: word-compression off for security findings, audit evidence, approval records, QA reports, destructive-action warnings and order-sensitive procedures; commit messages never tabulated.
 - `references/examples.md` with fictional worked table shapes.
 - Claude Code plugin manifest so the repo installs as a plugin or via `npx skills add`.
+- `docs/tokenomics.md`: measured token study against caveman and attention-span, with a calibrated tokenizer, break-even analysis and a table-markup micro-optimization study, plus `docs/token-comparison.png`.

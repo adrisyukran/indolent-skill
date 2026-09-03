@@ -160,6 +160,26 @@ Agents without slash commands: `$indolent` (Codex), the `/` picker (Cursor), or 
 | Relationships are diagrams | Flow, dependency, state, sequence: ASCII in a fenced block, at most 15 lines. Mermaid only where it renders |
 | Words compressed, facts never | Caveman word rules; numbers, thresholds, identifiers, warnings and rows are never cut |
 
+## Tokenomics
+
+`indolent` is **not** a token-saving layer. Measured against default prose on two matched scenarios (same facts, verified fact-for-fact):
+
+| Mode | Output tokens per reply | vs default prose |
+|---|---|---|
+| Default prose | 608 | baseline |
+| caveman `full` | 350 | −41% |
+| `indolent ultra` | 364 | −40% |
+| attention-span (`spartan`) | 392 | −34% |
+| `indolent full` | 426 | −29% |
+
+It also costs the most to load: `SKILL.md` is 3,603 tokens on invocation plus 200 always resident, roughly double caveman's. In money the difference is noise — about **USD 0.16** over a 40-reply session on Opus 5.
+
+What it buys instead: across those two scenarios `indolent` forced an explicit status word (**Met / Partial / Not met / Disputed / Not measured**) into **12 cells**; prose, caveman and attention-span produced **zero**, encoding severity narratively as "the most serious one" or "this is where things get complicated". A skimmer reads a status column and skips the narrative. That is the reason to run it.
+
+Full method, calibration against 864 real Claude API responses, break-even analysis and the table-markup micro-optimization study: [`docs/tokenomics.md`](docs/tokenomics.md).
+
+![Token comparison](docs/token-comparison.png)
+
 ## Carve-outs
 
 Word-compression turns **off** (full sentences in every cell and prose block) for security findings, audit evidence, approval records, QA reports, destructive-action warnings, order-sensitive procedures, and any "explain / why / walk me through" request. Tables may remain in those cases because a table is structure, not compression, but every row stays and every cell is a complete sentence. Commit messages are never tabulated or compressed. The mode never overrides a human-owned gate or approval step, never alters code, and never shrinks an evidence document written to disk; it governs the chat reply only.
