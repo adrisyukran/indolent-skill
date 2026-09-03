@@ -1,0 +1,13 @@
+{
+  "name": "indolent",
+  "version": "0.1.0",
+  "description": "Table-first, diagram-when-relational output mode for developers who skim. Findings, audits, plans and status as table matrices with a fixed status vocabulary.",
+  "author": {
+    "name": "Adri",
+    "url": "https://github.com/adrisyukran"
+  },
+  "homepage": "https://github.com/adrisyukran/indolent-skill",
+  "repository": "https://github.com/adrisyukran/indolent-skill",
+  "license": "MIT",
+  "keywords": ["output-style", "tables", "compression", "caveman", "attention-span", "skill"]
+}

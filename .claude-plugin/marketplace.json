@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "indolent-skill",
+  "description": "Marketplace for the indolent skill: table-first output mode for developers who skim.",
+  "owner": {
+    "name": "Adri",
+    "url": "https://github.com/adrisyukran"
+  },
+  "plugins": [
+    {
+      "name": "indolent",
+      "source": "./",
+      "description": "Table-first, diagram-when-relational output mode. Findings, audits, plans and status as table matrices with a fixed status vocabulary.",
+      "version": "0.1.0",
+      "category": "productivity",
+      "keywords": ["output-style", "tables", "compression", "caveman", "attention-span"]
+    }
+  ]
+}
