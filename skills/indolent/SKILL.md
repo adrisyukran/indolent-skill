@@ -8,14 +8,14 @@ description: >
   table. No preamble, no narration, no recap. Words compressed caveman-style,
   structure attention-span-style (answer first, bold carries the answer). Stays on
   for the whole session with a pre-send check against drift back to prose. Levels:
-  lite, full (default), ultra, off. Use when user says "indolent", "table it",
-  "matrix", "show me a table", "too much text", "be concise", "visualize this",
-  "diagram this", or invokes /indolent.
+  lite, full (default), ultra, off. Use when the user asks for output as a table or
+  matrix, asks to be concise, asks for a diagram, says there is too much text, or
+  invokes /indolent.
 license: MIT
 argument-hint: "[lite|full|ultra|off]"
 metadata:
   author: adrisyukran
-  version: "1.0.1"
+  version: "1.0.2"
 ---
 
 # Indolent
@@ -40,7 +40,7 @@ Long sessions pull back toward prose: each reply imitates the last few, one expl
 |---|---|---|
 | 1 | Line one: one sentence, carries the verdict | Rewrite line one |
 | 2 | Every set of 2+ items sharing attributes is a table | Convert list or paragraph to table |
-| 3 | No prose block over 2 sentences; never 3 prose blocks in a row | Table was missed; find it |
+| 3 | No prose block beyond its one bold point; never 3 in a row | Table was missed; find it |
 | 4 | Every table titled; status word bold, first in cell | Add it |
 | 5 | No preamble, no narration, no recap, no closing offer | Delete |
 
@@ -64,7 +64,7 @@ Fix before sending. Never send prose and apologise for it afterwards.
 3. **Title every table.** One short bold line above naming scope and source: `**Risk register — PRD §10**`, `**Failing tests — npm test, 2026-09-03**`.
 4. **"So what" line under the table** when the status column alone does not carry the conclusion. One bold sentence: `**None of the six metrics is computed anywhere.**` Skip when obvious.
 5. **Diagram when substance is a relationship, not a list**: flow, dependency, state machine, sequence, request path, blast radius. ASCII for simple, Mermaid for complex — see [Diagrams](#diagrams). Never draw what a table says better.
-6. **Prose only for**: line one, so-what lines, single-item points, warnings, the blocking question. Prose block at most 2 sentences, bold lead-in carries the point. Three prose blocks in a row: a table was missed.
+6. **Prose only for**: line one, so-what lines, single-item points, warnings, the blocking question. Keep a prose block to the one point its bold lead-in carries. Three prose blocks in a row: a table was missed.
 7. **Blocking question is the last block, nothing after it.**
 8. **Deliverable ships bare.** Commit, message, snippet, file: output only the thing.
 
@@ -169,7 +169,7 @@ Preserve the user's language. User writes Malay, headings and cells are Malay; i
 |---|---|---|---|
 | **lite** | Findings, reports, audits, comparisons, plans, status | Full sentences, no filler. Answer first, one idea per block | Short sentences OK |
 | **full** (default) | Anything with 2+ items sharing attributes | Caveman: no articles, fragments, short synonyms | Fragments, `**Verdict** — evidence` |
-| **ultra** | Everything except line one, so-what lines, warnings | Line one and so-what lines only. No other prose blocks | At most 8 words. Glyphs over words where unambiguous |
+| **ultra** | Everything except line one, so-what lines, warnings | Line one and so-what lines only. No other prose blocks | Shortest fragment that stays unambiguous. Glyphs over words where unambiguous |
 | **off** | Revert to normal output | — | — |
 
 Concise rules and the pre-send check apply at `lite`, `full` and `ultra`. `off` reverts everything, concise rules included.
@@ -185,7 +185,7 @@ Concise rules and the pre-send check apply at `lite`, `full` and `ultra`. `off` 
 
 Word-compression and the Concise rules go **off** — full sentences in every cell and prose block — when:
 
-- **Security findings, audit evidence, approval records, QA reports.** Table structure may stay, because a table is structure, not compression. But every row is present, every cell is a complete and precise sentence, and nothing is summarised away. Commit messages are never tabulated and never compressed: plain Conventional Commits.
+- **Security findings, audit evidence, approval records, commit messages, QA reports.** Table structure may stay, because a table is structure, not compression. But every row is present, every cell is a complete and precise sentence, and nothing is summarised away. Commit messages are the exception to the structure part: never tabulated and never compressed, plain Conventional Commits.
 - **Irreversible or destructive action** — delete, migrate, force-push, production change. A full-sentence warning comes *before* any table.
 - **Ordered procedure where order matters.** Numbered table with a `#` column and a full sentence per step, or plain numbered prose if a cell would hide the dependency between steps.
 - **Reasoning that must be read as a chain** — root-cause derivation, a proof, a trade-off argument where each step depends on the one before. Table the conclusion, keep the chain as prose beneath it.
@@ -202,21 +202,3 @@ Never overrides a human-owned gate or approval step (plan review, QA sign-off, r
 | Brevity or concise-output skills | Redundant. The Concise section above is the same ruleset |
 | attention-span output styles (`attention-kind`, `rundown`, `spartan`) | Structure agrees, words conflict: they mandate plain English and cap tables at 5 rows. Use `/indolent lite` alongside them (lite keeps full sentences), or switch the style to default for `full` and `ultra` |
 | Code-minimalism skills (ponytail), bash-output filters (rtk) | Orthogonal. Fine together |
-
-## Example
-
-User: "How does the auth service look against the spec?"
-
-Not a paragraph walking REQ-01, then REQ-02, then REQ-07, verdicts buried mid-clause. This:
-
-**5 of 7 met; REQ-02 disputed, REQ-07 not met.**
-
-**Requirements — auth service spec §3**
-
-| ID | Requirement | Status | Evidence | Gap |
-|---|---|---|---|---|
-| REQ-01 | Rate-limit login, 5 attempts per 15 min | **Met** | `LoginRateLimitTest`, tests 4, 5 | — |
-| REQ-02 | Password-reset token expires in 15 min | **Disputed** | `ResetToken::ttl()` returns 24h | Spec says **15 min**; 24h in code. Q-002 open |
-| REQ-07 | Audit-log export (CSV) | **Not met** | Only `GET /audit/{id}`, single-record read | **No export route exists** |
-
-**REQ-07 blocks the compliance duty in spec §5; nothing implements it.**

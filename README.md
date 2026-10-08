@@ -37,7 +37,7 @@ Follows the [Agent Skills](https://agentskills.io) open format, so one folder in
 
 **REQ-07 blocks the compliance duty in spec §5; nothing implements it.**
 
-More shapes (inventory, risk register, metrics, options, plan, root cause, code review, ASCII path, Mermaid flowchart, Mermaid state machine): [`skills/indolent/references/examples.md`](skills/indolent/references/examples.md).
+More shapes (inventory, risk register, metrics, options, plan, root cause, code review, ASCII path, Mermaid flowchart, Mermaid state machine) and the full worked audit above: [`skills/indolent/references/examples.md`](skills/indolent/references/examples.md).
 
 ## Install
 
@@ -147,7 +147,7 @@ Delete the `indolent` folder from wherever it was installed, or `npx skills remo
 | `/indolent` | `full` (default) |
 | `/indolent lite` | Tables for findings, reports, audits, plans, status. Prose elsewhere, full sentences, no filler |
 | `/indolent full` | Tables for anything with 2+ items sharing attributes. Caveman words in prose and cells |
-| `/indolent ultra` | Tables and diagrams only. Prose limited to line one and so-what lines. Cells at most 8 words |
+| `/indolent ultra` | Tables and diagrams only. Prose limited to line one and so-what lines. Cells cut to the shortest unambiguous fragment |
 | `/indolent off` | Back to the agent's normal output |
 
 Agents without slash commands: `$indolent` (Codex), the `/` picker (Cursor), or plain words such as "indolent ultra". Also triggers on "table it", "matrix", "show me a table", "too much text", "visualize this". Stays active for the session until `off`, "stop indolent" or "normal mode".
@@ -177,7 +177,7 @@ Agents without slash commands: `$indolent` (Codex), the `/` picker (Cursor), or 
 | attention-span (`spartan`) | 392 | −34% |
 | `indolent full` | 426 | −29% |
 
-It also costs the most to load: `SKILL.md` is 4,985 tokens on invocation plus 268 always resident, roughly 2.6× caveman's. In money the difference is noise — about **USD 0.16** over a 40-reply session on Opus 5. Output figures are from 0.1.0; 1.0.1's concise rules should cut a little more per reply, unmeasured.
+It also costs the most to load: `SKILL.md` is 4,654 tokens on invocation plus 252 always resident, roughly 2.4× caveman's. In money the difference is noise — about **USD 0.16** over a 40-reply session on Opus 5. Output figures are from 0.1.0; the concise rules should cut a little more per reply, unmeasured.
 
 What it buys instead: across those two scenarios `indolent` forced an explicit status word (**Met / Partial / Not met / Disputed / Not measured**) into **12 cells**; prose, caveman and attention-span produced **zero**, encoding severity narratively as "the most serious one" or "this is where things get complicated". A skimmer reads a status column and skips the narrative. That is the reason to run it.
 
@@ -205,7 +205,7 @@ indolent-skill/
 ├── skills/
 │   └── indolent/
 │       ├── SKILL.md                 # the skill (Agent Skills format)
-│       └── references/examples.md   # worked table shapes and diagrams, loaded on demand
+│       └── references/examples.md   # worked shapes, examples and diagrams, loaded on demand
 ├── .claude-plugin/
 │   ├── plugin.json                  # Claude Code plugin manifest
 │   └── marketplace.json             # lets /plugin marketplace add point at this repo

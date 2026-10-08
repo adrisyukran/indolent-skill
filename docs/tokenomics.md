@@ -1,6 +1,6 @@
 # Tokenomics of `indolent`
 
-Output cost measured 2026-09-03 on `indolent` 0.1.0. Input cost and break-even re-measured 2026-10-08 for `indolent` 1.0.1, which added the Concise section, the anti-drift pre-send check and Mermaid selection rules. What this skill actually costs, against [caveman](https://github.com/juliusbrussee/caveman) and [attention-span](https://github.com/alexgreensh/attention-span).
+Output cost measured 2026-09-03 on `indolent` 0.1.0. Input cost and break-even re-measured 2026-10-08 for `indolent` 1.0.2, which added the Concise section, the anti-drift pre-send check and Mermaid selection rules. What this skill actually costs, against [caveman](https://github.com/juliusbrussee/caveman) and [attention-span](https://github.com/alexgreensh/attention-span).
 
 **Headline: `indolent` is not a token-saving layer.** It cuts output 29–40% against default prose, which is *less* than caveman's 41%, and it costs nearly three times as much to load. What it buys instead is an explicit status word in every row — the thing prose omits when you skim.
 
@@ -49,11 +49,11 @@ Skills load progressively — the description sits in the system prompt every se
 | attention-span `attention-kind` (style) | 2,492 | — | 2,492 |
 | caveman | 154 | 1,763 | 1,917 |
 | **`indolent` 0.1.0** | 200 | 3,603 | 3,803 |
-| **`indolent` 1.0.1** | **268** | **4,985** | **5,253** |
+| **`indolent` 1.0.2** | **252** | **4,654** | **4,906** |
 
-`references/examples.md` is a further 2,126 tokens (1,713 at 0.1.0) and loads only when a table shape or diagram form is unclear.
+`references/examples.md` is a further 2,478 tokens (1,713 at 0.1.0) and loads only when a table shape or diagram form is unclear. It now carries the worked examples that 0.1.0 kept in `SKILL.md`.
 
-**`indolent`'s `SKILL.md` is the largest of the three**, roughly 2.6× caveman's. That is the honest cost of carrying column recipes, a status vocabulary, concise rules, an anti-drift check, diagram selection and carve-outs in one file. At 4,985 it is inside the Agent Skills recommendation of under 5,000 tokens for a skill body, with 15 tokens of headroom: the next addition has to displace something, which is why 1.0.1 moved the diagram examples into `references/`.
+**`indolent`'s `SKILL.md` is the largest of the three**, roughly 2.6× caveman's. That is the honest cost of carrying column recipes, a status vocabulary, concise rules, an anti-drift check, diagram selection and carve-outs in one file. At 4,654 it is inside the Agent Skills recommendation of under 5,000 tokens for a skill body, with 346 tokens of headroom. Holding that line is why the diagram examples moved into `references/` at 1.0.1 and the worked audit example followed at 1.0.2: rules stay in the body, examples live one level down and load on demand.
 
 ## Break-even
 
@@ -61,10 +61,10 @@ Skills load progressively — the description sits in the system prompt every se
 |---|---|---|---|---|
 | attention-span | 216 | 1,259 | 6 replies | 1 reply |
 | caveman | 258 | 1,917 | 7 replies | 1 reply |
-| `indolent ultra` | 244 | 5,253 | 22 replies | 3 replies |
-| `indolent full` | 182 | 5,253 | 29 replies | 3 replies |
+| `indolent ultra` | 244 | 4,906 | 21 replies | 3 replies |
+| `indolent full` | 182 | 4,906 | 27 replies | 3 replies |
 
-Savings per reply are the 0.1.0 output measurement. The Concise section in 1.0.1 removes preamble, narration and recap, which should cut a little more per reply, but that has **not been measured** — the rows above assume no improvement.
+Savings per reply are the 0.1.0 output measurement. The Concise section removes preamble, narration and recap, which should cut a little more per reply, but that has **not been measured** — the rows above assume no improvement.
 
 ## In money, it is noise
 
@@ -72,7 +72,7 @@ On Claude Opus 5 (USD 5 per 1M input, USD 25 per 1M output — output is billed 
 
 ```
 output saved   40 × 182 = 7,280 tokens  ×  $25/1M  =  $0.182
-input paid              5,253 tokens  ×  $5/1M   =  $0.026
+input paid              4,906 tokens  ×  $5/1M   =  $0.025
                                               net ≈  $0.16
 ```
 
@@ -123,7 +123,7 @@ Whole-table variants of the same content:
 | Renderings authored for the test, not sampled from live traffic | Directional, not a controlled trial. The fact-preservation check bounds the main bias but does not remove it |
 | Two scenarios | Both are list-shaped findings work — this skill's core case. Says nothing about narrative or exploratory replies |
 | Calibration is one machine's traffic | The 1.4912 factor reflects English, markdown-heavy Claude Code output. Other languages or content shapes may differ |
-| Output cost not re-measured for 1.0.1 | The five output figures date from 0.1.0. The rules added since tighten prose rather than tables, so the direction is a small further cut, unquantified |
+| Output cost not re-measured for 1.0.2 | The five output figures date from 0.1.0. The rules added since tighten prose rather than tables, so the direction is a small further cut, unquantified |
 | No historical A/B from real sessions | Session logs could not attribute a mode to a session: the caveman mode log held 3 entries with no session IDs, and the output-style marker appears in only one transcript |
 
 ## Reproducing

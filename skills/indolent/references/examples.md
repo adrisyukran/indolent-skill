@@ -1,6 +1,24 @@
-# Indolent — worked table shapes
+# Indolent — worked shapes
 
-All examples are fictional. Load this file only when a table shape is unclear; `SKILL.md` already carries the rules.
+All examples are fictional. Load this file only when a table shape or diagram form is unclear; `SKILL.md` already carries the rules.
+
+## The shape, end to end
+
+User: "How does the auth service look against the spec?"
+
+Not a paragraph walking REQ-01, then REQ-02, then REQ-07, verdicts buried mid-clause. This:
+
+**5 of 7 met; REQ-02 disputed, REQ-07 not met.**
+
+**Requirements — auth service spec §3**
+
+| ID | Requirement | Status | Evidence | Gap |
+|---|---|---|---|---|
+| REQ-01 | Rate-limit login, 5 attempts per 15 min | **Met** | `LoginRateLimitTest`, tests 4, 5 | — |
+| REQ-02 | Password-reset token expires in 15 min | **Disputed** | `ResetToken::ttl()` returns 24h | Spec says **15 min**; 24h in code. Q-002 open |
+| REQ-07 | Audit-log export (CSV) | **Not met** | Only `GET /audit/{id}`, single-record read | **No export route exists** |
+
+**REQ-07 blocks the compliance duty in spec §5; nothing implements it.**
 
 ## Inventory vs built
 

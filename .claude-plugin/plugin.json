@@ -1,6 +1,6 @@
 {
   "name": "indolent",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Table-first, concise, diagram-when-relational output mode for developers who skim. Findings, audits, plans and status as table matrices with a fixed status vocabulary; ASCII or Mermaid for relationships.",
   "author": {
     "name": "Adri",
