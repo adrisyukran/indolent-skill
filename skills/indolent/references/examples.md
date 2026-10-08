@@ -89,7 +89,9 @@ All examples are fictional. Load this file only when a table shape is unclear; `
 | `KeyController.php:31` | **Med** | No rate limit on issue | Apply `throttle:10,1` |
 | `KeyTest.php:12` | **Low** | Asserts count, not content | Assert hash present, raw absent |
 
-## Diagram — when the substance is a relationship
+## Diagram — ASCII, linear path
+
+Simple relationship, no branching, renders in a plain terminal.
 
 **Key issue path**
 
@@ -101,6 +103,43 @@ client ──POST /api/keys──▶ KeyController ──▶ KeyService.issue()
                                                 │
                             raw key shown once ◀┘ (never stored)
 ```
+
+## Diagram — Mermaid, same path once it branches
+
+Two guards and three exits: ASCII would turn into a maze of pipes.
+
+**Key issue path, with rejections**
+
+```mermaid
+flowchart TD
+  req["POST /api/keys"] --> auth{"token valid?"}
+  auth -->|no| e401["401, no key issued"]
+  auth -->|yes| quota{"quota left?"}
+  quota -->|no| e429["429"]
+  quota -->|yes| issue["KeyService.issue()"]
+  issue --> store["hash only"] --> db[("api_keys")]
+  issue --> once["raw key returned once, never stored"]
+```
+
+**Every rejection path returns before `issue()`, so no row is written on a failed request.**
+
+## Diagram — Mermaid, state machine
+
+**Export job lifecycle**
+
+```mermaid
+stateDiagram-v2
+  [*] --> queued
+  queued --> running : worker picks up
+  running --> done : rows written
+  running --> failed : timeout 300s
+  failed --> queued : retry, max 3
+  failed --> dead : retries exhausted
+  done --> [*]
+  dead --> [*]
+```
+
+**`dead` has no cleanup transition; rows stay until an operator deletes them.**
 
 ## Ultra level — same audit, tighter cells
 

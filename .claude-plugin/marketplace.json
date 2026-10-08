@@ -10,10 +10,10 @@
     {
       "name": "indolent",
       "source": "./",
-      "description": "Table-first, diagram-when-relational output mode. Findings, audits, plans and status as table matrices with a fixed status vocabulary.",
-      "version": "0.1.0",
+      "description": "Table-first, concise, diagram-when-relational output mode. Findings, audits, plans and status as table matrices with a fixed status vocabulary; ASCII or Mermaid for relationships.",
+      "version": "1.0.1",
       "category": "productivity",
-      "keywords": ["output-style", "tables", "compression", "caveman", "attention-span"]
+      "keywords": ["output-style", "tables", "mermaid", "concise", "compression", "caveman", "attention-span"]
     }
   ]
 }

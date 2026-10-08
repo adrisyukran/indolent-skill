@@ -2,7 +2,7 @@
 
 > Table-first output mode for AI coding agents. Built for developers who skim.
 
-`/indolent` turns findings, audits, comparisons, plans, status and risks into **table matrices** with a fixed status vocabulary, turns relationships into small ASCII diagrams, and leaves prose only for the one-line answer and the "so what" under each table. Words are compressed [caveman](https://github.com/juliusbrussee/caveman)-style; structure is [attention-span](https://github.com/alexgreensh/attention-span)-style (answer first, bold carries the answer). Facts are never compressed: rows, numbers, thresholds, identifiers and warnings always survive.
+`/indolent` turns findings, audits, comparisons, plans, status and risks into **table matrices** with a fixed status vocabulary, turns relationships into diagrams (ASCII when simple, Mermaid when branching), and leaves prose only for the one-line answer and the "so what" under each table. Preamble, intent narration, recap and closing offers are cut. Words are compressed [caveman](https://github.com/juliusbrussee/caveman)-style; structure is [attention-span](https://github.com/alexgreensh/attention-span)-style (answer first, bold carries the answer). Facts are never compressed: rows, numbers, thresholds, identifiers and warnings always survive.
 
 Follows the [Agent Skills](https://agentskills.io) open format, so one folder installs into Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot, OpenCode and 75+ other agents.
 
@@ -12,6 +12,9 @@ Follows the [Agent Skills](https://agentskills.io) open format, so one folder in
 |---|---|
 | Long explanations get skimmed; the line that mattered gets skipped | Line one is the whole answer; every multi-item finding is a titled table |
 | "Put it in a table" is a per-prompt tax | One `/indolent` makes it the session default |
+| Output styles decay over a long session, drifting back to prose | A five-item pre-send check runs on every reply, with a drift-symptom table and the correction for each |
+| Every reply opens with "Sure, I'll help with that" and closes with "let me know if…" | Both cut, along with intent narration, filler phrases and recap of work just done |
+| A branching flow drawn in ASCII becomes a maze of pipes | Shape picks the form: linear stays ASCII, branching and state machines go to Mermaid |
 | Compression usually drops facts | Words are compressed; rows, numbers, thresholds and warnings never are |
 
 ## Before / after
@@ -34,7 +37,7 @@ Follows the [Agent Skills](https://agentskills.io) open format, so one folder in
 
 **REQ-07 blocks the compliance duty in spec §5; nothing implements it.**
 
-More shapes (inventory, risk register, metrics, options, plan, root cause, code review, diagram): [`skills/indolent/references/examples.md`](skills/indolent/references/examples.md).
+More shapes (inventory, risk register, metrics, options, plan, root cause, code review, ASCII path, Mermaid flowchart, Mermaid state machine): [`skills/indolent/references/examples.md`](skills/indolent/references/examples.md).
 
 ## Install
 
@@ -157,7 +160,9 @@ Agents without slash commands: `$indolent` (Codex), the `/` picker (Cursor), or 
 | Multi-item content is a table | 11 column recipes, e.g. `ID · Requirement · Status · Evidence · Gap`, `Symptom · Cause · Evidence · Fix` |
 | Fixed status words | **Met / Partial / Not met / Disputed / Not measured**; ✓ ✗ —; Blocker / High / Med / Low; Done / In progress / Blocked / Todo |
 | Every table titled, so-what line beneath | `**Risk register — PRD §10**` above; one bold conclusion below when the status column alone does not carry it |
-| Relationships are diagrams | Flow, dependency, state, sequence: ASCII in a fenced block, at most 15 lines. Mermaid only where it renders |
+| Relationships are diagrams | Linear path, ≤8 nodes: ASCII, fenced, ≤15 lines. Branching, loops, >8 nodes, state machines, 3+-actor sequences: Mermaid, ≤15 nodes, conditional edges labelled |
+| No preamble, no narration, no recap | Line one is the answer; the reply ends on the blocking question or stops |
+| Mode survives the session | Pre-send check every reply; a context compaction, subagent return or long tool chain does not end it |
 | Words compressed, facts never | Caveman word rules; numbers, thresholds, identifiers, warnings and rows are never cut |
 
 ## Tokenomics
@@ -172,7 +177,7 @@ Agents without slash commands: `$indolent` (Codex), the `/` picker (Cursor), or 
 | attention-span (`spartan`) | 392 | −34% |
 | `indolent full` | 426 | −29% |
 
-It also costs the most to load: `SKILL.md` is 3,603 tokens on invocation plus 200 always resident, roughly double caveman's. In money the difference is noise — about **USD 0.16** over a 40-reply session on Opus 5.
+It also costs the most to load: `SKILL.md` is 4,979 tokens on invocation plus 268 always resident, roughly 2.6× caveman's. In money the difference is noise — about **USD 0.16** over a 40-reply session on Opus 5. Output figures are from 0.1.0; 1.0.1's concise rules should cut a little more per reply, unmeasured.
 
 What it buys instead: across those two scenarios `indolent` forced an explicit status word (**Met / Partial / Not met / Disputed / Not measured**) into **12 cells**; prose, caveman and attention-span produced **zero**, encoding severity narratively as "the most serious one" or "this is where things get complicated". A skimmer reads a status column and skips the narrative. That is the reason to run it.
 
@@ -182,13 +187,14 @@ Full method, calibration against 864 real Claude API responses, break-even analy
 
 ## Carve-outs
 
-Word-compression turns **off** (full sentences in every cell and prose block) for security findings, audit evidence, approval records, QA reports, destructive-action warnings, order-sensitive procedures, and any "explain / why / walk me through" request. Tables may remain in those cases because a table is structure, not compression, but every row stays and every cell is a complete sentence. Commit messages are never tabulated or compressed. The mode never overrides a human-owned gate or approval step, never alters code, and never shrinks an evidence document written to disk; it governs the chat reply only.
+Word-compression and the concise rules turn **off** (full sentences in every cell and prose block) for security findings, audit evidence, approval records, QA reports, destructive-action warnings, order-sensitive procedures, reasoning that must be read as a chain (root-cause derivation, a proof, a dependent trade-off argument), and any "explain / why / walk me through" request. Tables may remain in those cases because a table is structure, not compression, but every row stays and every cell is a complete sentence. Commit messages are never tabulated or compressed. The mode never overrides a human-owned gate or approval step, never alters code, and never shrinks an evidence document written to disk; it governs the chat reply only.
 
 ## Compatibility with other output layers
 
 | Layer | With indolent |
 |---|---|
 | [caveman](https://github.com/juliusbrussee/caveman) | Redundant, not conflicting: indolent already carries the same word rules. Don't load both |
+| Brevity / concise-output skills | Redundant: the Concise section is the same ruleset |
 | [attention-span](https://github.com/alexgreensh/attention-span) output styles (`attention-kind`, `rundown`, `spartan`) | Structure agrees, words conflict (they mandate plain English and cap tables at 5 rows). Use `/indolent lite` with them, or switch the style to default for `full` / `ultra` |
 | Code-minimalism skills (e.g. ponytail), bash-output filters (e.g. rtk) | Orthogonal. Fine together |
 
@@ -199,7 +205,7 @@ indolent-skill/
 ├── skills/
 │   └── indolent/
 │       ├── SKILL.md                 # the skill (Agent Skills format)
-│       └── references/examples.md   # worked table shapes, loaded on demand
+│       └── references/examples.md   # worked table shapes and diagrams, loaded on demand
 ├── .claude-plugin/
 │   ├── plugin.json                  # Claude Code plugin manifest
 │   └── marketplace.json             # lets /plugin marketplace add point at this repo
