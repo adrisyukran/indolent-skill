@@ -49,11 +49,11 @@ Skills load progressively — the description sits in the system prompt every se
 | attention-span `attention-kind` (style) | 2,492 | — | 2,492 |
 | caveman | 154 | 1,763 | 1,917 |
 | **`indolent` 0.1.0** | 200 | 3,603 | 3,803 |
-| **`indolent` 1.0.1** | **268** | **4,979** | **5,247** |
+| **`indolent` 1.0.1** | **268** | **4,985** | **5,253** |
 
 `references/examples.md` is a further 2,126 tokens (1,713 at 0.1.0) and loads only when a table shape or diagram form is unclear.
 
-**`indolent`'s `SKILL.md` is the largest of the three**, roughly 2.6× caveman's. That is the honest cost of carrying column recipes, a status vocabulary, concise rules, an anti-drift check, diagram selection and carve-outs in one file. At 4,979 it is inside the Agent Skills recommendation of under 5,000 tokens for a skill body, with 21 tokens of headroom: the next addition has to displace something, which is why 1.0.1 moved the diagram examples into `references/`.
+**`indolent`'s `SKILL.md` is the largest of the three**, roughly 2.6× caveman's. That is the honest cost of carrying column recipes, a status vocabulary, concise rules, an anti-drift check, diagram selection and carve-outs in one file. At 4,985 it is inside the Agent Skills recommendation of under 5,000 tokens for a skill body, with 15 tokens of headroom: the next addition has to displace something, which is why 1.0.1 moved the diagram examples into `references/`.
 
 ## Break-even
 
@@ -61,8 +61,8 @@ Skills load progressively — the description sits in the system prompt every se
 |---|---|---|---|---|
 | attention-span | 216 | 1,259 | 6 replies | 1 reply |
 | caveman | 258 | 1,917 | 7 replies | 1 reply |
-| `indolent ultra` | 244 | 5,247 | 22 replies | 3 replies |
-| `indolent full` | 182 | 5,247 | 29 replies | 3 replies |
+| `indolent ultra` | 244 | 5,253 | 22 replies | 3 replies |
+| `indolent full` | 182 | 5,253 | 29 replies | 3 replies |
 
 Savings per reply are the 0.1.0 output measurement. The Concise section in 1.0.1 removes preamble, narration and recap, which should cut a little more per reply, but that has **not been measured** — the rows above assume no improvement.
 
@@ -72,7 +72,7 @@ On Claude Opus 5 (USD 5 per 1M input, USD 25 per 1M output — output is billed 
 
 ```
 output saved   40 × 182 = 7,280 tokens  ×  $25/1M  =  $0.182
-input paid              5,247 tokens  ×  $5/1M   =  $0.026
+input paid              5,253 tokens  ×  $5/1M   =  $0.026
                                               net ≈  $0.16
 ```
 

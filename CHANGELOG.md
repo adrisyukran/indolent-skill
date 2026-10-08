@@ -14,7 +14,7 @@ Version jumps from `0.1.0` to `1.0.1`; `1.0.0` was never released.
 - `references/examples.md`: branching Mermaid `flowchart` and a `stateDiagram-v2`, alongside the existing ASCII path.
 
 ### Changed
-- Diagram worked examples moved from `SKILL.md` into `references/examples.md`, keeping the skill body under the 5,000-token Agent Skills guidance (now 4,979 estimated Claude tokens, up from 3,603).
+- Diagram worked examples moved from `SKILL.md` into `references/examples.md`, keeping the skill body under the 5,000-token Agent Skills guidance (now 4,985 estimated Claude tokens, up from 3,603).
 - Skill `description` now names concise output, Mermaid and session persistence so the mode triggers on "be concise" and "diagram this".
 - `docs/tokenomics.md`: input-cost and break-even tables re-measured for this version; output-cost study unchanged from 2026-09-03.
 

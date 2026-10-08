@@ -172,7 +172,7 @@ Preserve the user's language. User writes Malay, headings and cells are Malay; i
 | **ultra** | Everything except line one, so-what lines, warnings | Line one and so-what lines only. No other prose blocks | At most 8 words. Glyphs over words where unambiguous |
 | **off** | Revert to normal output | — | — |
 
-Concise rules and the pre-send check apply at every level, `off` included where the agent's own instructions do not say otherwise.
+Concise rules and the pre-send check apply at `lite`, `full` and `ultra`. `off` reverts everything, concise rules included.
 
 ## Never cut
 

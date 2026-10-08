@@ -177,7 +177,7 @@ Agents without slash commands: `$indolent` (Codex), the `/` picker (Cursor), or 
 | attention-span (`spartan`) | 392 | −34% |
 | `indolent full` | 426 | −29% |
 
-It also costs the most to load: `SKILL.md` is 4,979 tokens on invocation plus 268 always resident, roughly 2.6× caveman's. In money the difference is noise — about **USD 0.16** over a 40-reply session on Opus 5. Output figures are from 0.1.0; 1.0.1's concise rules should cut a little more per reply, unmeasured.
+It also costs the most to load: `SKILL.md` is 4,985 tokens on invocation plus 268 always resident, roughly 2.6× caveman's. In money the difference is noise — about **USD 0.16** over a 40-reply session on Opus 5. Output figures are from 0.1.0; 1.0.1's concise rules should cut a little more per reply, unmeasured.
 
 What it buys instead: across those two scenarios `indolent` forced an explicit status word (**Met / Partial / Not met / Disputed / Not measured**) into **12 cells**; prose, caveman and attention-span produced **zero**, encoding severity narratively as "the most serious one" or "this is where things get complicated". A skimmer reads a status column and skips the narrative. That is the reason to run it.
 
